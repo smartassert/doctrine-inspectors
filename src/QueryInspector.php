@@ -29,6 +29,6 @@ class QueryInspector
         $connection = $this->entityManager->getConnection();
 
         $statement = $connection->prepare($this->query);
-        $statement->execute($this->queryParameters);
+        $statement->executeQuery($this->queryParameters);
     }
 }
