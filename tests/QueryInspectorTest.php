@@ -24,7 +24,7 @@ class QueryInspectorTest extends TestCase
     {
         $statement = \Mockery::mock(Statement::class);
         $statement
-            ->shouldReceive('execute')
+            ->shouldReceive('executeQuery')
             ->with($queryParameters)
         ;
 
