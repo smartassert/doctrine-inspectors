@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace SmartAssert\Tests\DoctrineInspectors;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\ClassMetadataFactory;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use SmartAssert\DoctrineInspectors\EntityMappingInspector;
@@ -15,27 +17,77 @@ class EntityMappingInspectorTest extends TestCase
 
     public function testInvokeSuccess(): void
     {
-        $entityManager = \Mockery::mock(EntityManagerInterface::class);
+        $entityClassNames = [
+            'Example\Foo',
+            'Example\Bar',
+        ];
 
-        $inspector = new EntityMappingInspector($entityManager, []);
+        $classMetadataCollection = [];
+        foreach ($entityClassNames as $entityClassName) {
+            $classMetadata = \Mockery::mock(ClassMetadata::class);
+            $classMetadata
+                ->shouldReceive('getName')
+                ->andReturn($entityClassName)
+            ;
+
+            $classMetadataCollection[] = $classMetadata;
+        }
+
+        $metadataFactory = \Mockery::mock(ClassMetadataFactory::class);
+        $metadataFactory
+            ->shouldReceive('getAllMetadata')
+            ->once()
+            ->andReturn($classMetadataCollection)
+        ;
+
+        $entityManager = \Mockery::mock(EntityManagerInterface::class);
+        $entityManager
+            ->shouldReceive('getMetadataFactory')
+            ->once()
+            ->andReturn($metadataFactory)
+        ;
+
+        foreach ($entityClassNames as $entityClassName) {
+            $entityManager
+                ->shouldReceive('getRepository')
+                ->once()
+                ->with($entityClassName)
+            ;
+        }
+
+        $inspector = new EntityMappingInspector($entityManager);
 
         ($inspector)();
-        self::expectNotToPerformAssertions();
     }
 
     public function testInvokeFailure(): void
     {
         $exception = new \Exception();
 
+        $classMetadata = \Mockery::mock(ClassMetadata::class);
+        $classMetadata
+            ->shouldReceive('getName')
+            ->andReturn('Example\Foo')
+        ;
+
+        $metadataFactory = \Mockery::mock(ClassMetadataFactory::class);
+        $metadataFactory
+            ->shouldReceive('getAllMetadata')
+            ->andReturn([$classMetadata])
+        ;
+
         $entityManager = \Mockery::mock(EntityManagerInterface::class);
+        $entityManager
+            ->shouldReceive('getMetadataFactory')
+            ->andReturn($metadataFactory)
+        ;
+
         $entityManager
             ->shouldReceive('getRepository')
             ->andThrow($exception)
         ;
 
-        $inspector = new EntityMappingInspector($entityManager, [
-            self::class,
-        ]);
+        $inspector = new EntityMappingInspector($entityManager);
 
         self::expectExceptionObject($exception);
 

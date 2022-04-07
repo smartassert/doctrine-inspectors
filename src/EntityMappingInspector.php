@@ -8,18 +8,19 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class EntityMappingInspector
 {
-    /**
-     * @param array<class-string> $entityClassNames
-     */
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private array $entityClassNames,
     ) {
     }
 
     public function __invoke(): void
     {
-        foreach ($this->entityClassNames as $entityClassName) {
+        $entityClassNames = [];
+        foreach ($this->entityManager->getMetadataFactory()->getAllMetadata() as $metadata) {
+            $entityClassNames[] = $metadata->getName();
+        }
+
+        foreach ($entityClassNames as $entityClassName) {
             $this->entityManager->getRepository($entityClassName);
         }
     }
