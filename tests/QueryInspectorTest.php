@@ -41,9 +41,14 @@ class QueryInspectorTest extends TestCase
             ->andReturn($connection)
         ;
 
-        $inspector = new QueryInspector($entityManager, $query, $queryParameters);
+        $inspector = new QueryInspector(
+            $entityManager,
+            QueryInspector::DEFAULT_IDENTIFIER,
+            $query,
+            $queryParameters
+        );
 
-        ($inspector)();
+        $inspector->isAvailable();
     }
 
     /**

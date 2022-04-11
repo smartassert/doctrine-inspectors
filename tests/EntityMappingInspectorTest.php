@@ -15,7 +15,7 @@ class EntityMappingInspectorTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    public function testInvokeSuccess(): void
+    public function testIsAvailableSuccess(): void
     {
         $entityClassNames = [
             'Example\Foo',
@@ -57,10 +57,10 @@ class EntityMappingInspectorTest extends TestCase
 
         $inspector = new EntityMappingInspector($entityManager);
 
-        ($inspector)();
+        $inspector->isAvailable();
     }
 
-    public function testInvokeFailure(): void
+    public function testIsAvailableFailure(): void
     {
         $exception = new \Exception();
 
@@ -91,6 +91,6 @@ class EntityMappingInspectorTest extends TestCase
 
         self::expectExceptionObject($exception);
 
-        ($inspector)();
+        $inspector->isAvailable();
     }
 }
