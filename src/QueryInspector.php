@@ -6,7 +6,6 @@ namespace SmartAssert\DoctrineInspectors;
 
 use Doctrine\DBAL\Driver\Exception as DbalDriverException;
 use Doctrine\DBAL\Exception as DbalException;
-use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityManagerInterface;
 use SmartAssert\ServiceStatusInspector\ComponentStatusInspectorInterface;
 

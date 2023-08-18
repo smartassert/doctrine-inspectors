@@ -23,10 +23,19 @@ class QueryInspectorTest extends TestCase
     public function testInvoke(string $query, array $queryParameters): void
     {
         $statement = \Mockery::mock(Statement::class);
+
+        foreach ($queryParameters as $key => $value) {
+            $statement
+                ->shouldReceive('bindValue')
+                ->once()
+                ->with($key, $value)
+            ;
+        }
+
         $statement
             ->shouldReceive('executeQuery')
             ->once()
-            ->with($queryParameters)
+            ->withNoArgs()
         ;
 
         $connection = \Mockery::mock(Connection::class);
