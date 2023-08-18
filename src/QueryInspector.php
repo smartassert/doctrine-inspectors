@@ -33,7 +33,11 @@ class QueryInspector implements ComponentStatusInspectorInterface
         $connection = $this->entityManager->getConnection();
 
         $statement = $connection->prepare($this->query);
-        $statement->executeQuery($this->queryParameters);
+        foreach ($this->queryParameters as $param => $value) {
+            $statement->bindValue($param, $value);
+        }
+
+        $statement->executeQuery();
 
         return true;
     }
