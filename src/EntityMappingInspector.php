@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace SmartAssert\DoctrineInspectors;
 
 use Doctrine\ORM\EntityManagerInterface;
+use SmartAssert\ServiceStatusInspector\ComponentStatusInspectorInterface;
 
-class EntityMappingInspector
+class EntityMappingInspector implements ComponentStatusInspectorInterface
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
