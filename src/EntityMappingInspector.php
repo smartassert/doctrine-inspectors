@@ -9,8 +9,11 @@ use SmartAssert\ServiceStatusInspector\ComponentStatusInspectorInterface;
 
 class EntityMappingInspector implements ComponentStatusInspectorInterface
 {
+    public const IDENTIFIER = 'database_entities';
+
     public function __construct(
         private EntityManagerInterface $entityManager,
+        private readonly string $identifier =
     ) {
     }
 
@@ -24,5 +27,10 @@ class EntityMappingInspector implements ComponentStatusInspectorInterface
         foreach ($entityClassNames as $entityClassName) {
             $this->entityManager->getRepository($entityClassName);
         }
+    }
+
+    public function getIdentifier(): string
+    {
+        // TODO: Implement getIdentifier() method.
     }
 }
