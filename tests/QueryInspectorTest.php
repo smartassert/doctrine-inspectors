@@ -49,7 +49,7 @@ class QueryInspectorTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function invokeDataProvider(): array
+    public static function invokeDataProvider(): array
     {
         return [
             'query, no parameters' => [
