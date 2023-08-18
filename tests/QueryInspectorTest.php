@@ -46,7 +46,7 @@ class QueryInspectorTest extends TestCase
 
         $inspector = new QueryInspector($entityManager, $query, $queryParameters);
 
-        ($inspector)();
+        $inspector->getStatus();
     }
 
     /**
