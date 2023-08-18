@@ -25,12 +25,14 @@ class QueryInspectorTest extends TestCase
         $statement = \Mockery::mock(Statement::class);
         $statement
             ->shouldReceive('executeQuery')
+            ->once()
             ->with($queryParameters)
         ;
 
         $connection = \Mockery::mock(Connection::class);
         $connection
             ->shouldReceive('prepare')
+            ->once()
             ->with($query)
             ->andReturn($statement)
         ;
@@ -38,6 +40,7 @@ class QueryInspectorTest extends TestCase
         $entityManager = \Mockery::mock(EntityManagerInterface::class);
         $entityManager
             ->shouldReceive('getConnection')
+            ->once()
             ->andReturn($connection)
         ;
 
