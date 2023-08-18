@@ -7,8 +7,9 @@ namespace SmartAssert\DoctrineInspectors;
 use Doctrine\DBAL\Driver\Exception as DbalDriverException;
 use Doctrine\DBAL\Exception as DbalException;
 use Doctrine\ORM\EntityManagerInterface;
+use SmartAssert\ServiceStatusInspector\ComponentStatusInspectorInterface;
 
-class QueryInspector
+class QueryInspector implements ComponentStatusInspectorInterface
 {
     /**
      * @param array<string, scalar> $queryParameters
@@ -24,11 +25,13 @@ class QueryInspector
      * @throws DbalDriverException
      * @throws DbalException
      */
-    public function __invoke(): void
+    public function getStatus(): bool
     {
         $connection = $this->entityManager->getConnection();
 
         $statement = $connection->prepare($this->query);
         $statement->executeQuery($this->queryParameters);
+
+        return true;
     }
 }

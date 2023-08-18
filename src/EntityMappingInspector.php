@@ -17,7 +17,7 @@ readonly class EntityMappingInspector implements ComponentStatusInspectorInterfa
     ) {
     }
 
-    public function __invoke(): void
+    public function getStatus(): bool
     {
         $entityClassNames = [];
         foreach ($this->entityManager->getMetadataFactory()->getAllMetadata() as $metadata) {
@@ -27,6 +27,8 @@ readonly class EntityMappingInspector implements ComponentStatusInspectorInterfa
         foreach ($entityClassNames as $entityClassName) {
             $this->entityManager->getRepository($entityClassName);
         }
+
+        return true;
     }
 
     public function getIdentifier(): string
