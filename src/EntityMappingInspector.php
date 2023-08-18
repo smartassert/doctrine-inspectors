@@ -7,13 +7,13 @@ namespace SmartAssert\DoctrineInspectors;
 use Doctrine\ORM\EntityManagerInterface;
 use SmartAssert\ServiceStatusInspector\ComponentStatusInspectorInterface;
 
-class EntityMappingInspector implements ComponentStatusInspectorInterface
+readonly class EntityMappingInspector implements ComponentStatusInspectorInterface
 {
     public const DEFAULT_IDENTIFIER = 'database_entities';
 
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-        private readonly string $identifier = self::DEFAULT_IDENTIFIER,
+        private EntityManagerInterface $entityManager,
+        private string $identifier = self::DEFAULT_IDENTIFIER,
     ) {
     }
 

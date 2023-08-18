@@ -9,7 +9,7 @@ use Doctrine\DBAL\Exception as DbalException;
 use Doctrine\ORM\EntityManagerInterface;
 use SmartAssert\ServiceStatusInspector\ComponentStatusInspectorInterface;
 
-class QueryInspector implements ComponentStatusInspectorInterface
+readonly class QueryInspector implements ComponentStatusInspectorInterface
 {
     public const DEFAULT_IDENTIFIER = 'database_connection';
 
@@ -17,10 +17,10 @@ class QueryInspector implements ComponentStatusInspectorInterface
      * @param array<string, scalar> $queryParameters
      */
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-        private readonly string $query = 'SELECT 1',
-        private readonly array $queryParameters = [],
-        private readonly string $identifier = self::DEFAULT_IDENTIFIER,
+        private EntityManagerInterface $entityManager,
+        private string $query = 'SELECT 1',
+        private array $queryParameters = [],
+        private string $identifier = self::DEFAULT_IDENTIFIER,
     ) {
     }
 
