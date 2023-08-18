@@ -37,7 +37,7 @@
         "php": "^8.2",
         "doctrine/orm": "*",
         "doctrine/dbal": "*",
-        "smartassert/service-status-inspector": "^5.0"
+        "smartassert/service-status-inspector": "^6.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.3",
