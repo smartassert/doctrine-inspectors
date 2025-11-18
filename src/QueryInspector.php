@@ -21,8 +21,7 @@ readonly class QueryInspector implements ComponentStatusInspectorInterface
         private string $query = 'SELECT 1',
         private array $queryParameters = [],
         private string $identifier = self::DEFAULT_IDENTIFIER,
-    ) {
-    }
+    ) {}
 
     /**
      * @throws DbalDriverException
