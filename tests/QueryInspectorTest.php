@@ -8,6 +8,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityManagerInterface;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SmartAssert\DoctrineInspectors\QueryInspector;
 
@@ -16,10 +17,9 @@ class QueryInspectorTest extends TestCase
     use MockeryPHPUnitIntegration;
 
     /**
-     * @dataProvider invokeDataProvider
-     *
      * @param array<string, scalar> $queryParameters
      */
+    #[DataProvider('invokeDataProvider')]
     public function testInvoke(string $query, array $queryParameters): void
     {
         $statement = \Mockery::mock(Statement::class);
