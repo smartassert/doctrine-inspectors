@@ -14,8 +14,7 @@ class EntityMappingInspector implements ComponentStatusInspectorInterface
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly string $identifier = self::DEFAULT_IDENTIFIER,
-    ) {
-    }
+    ) {}
 
     public function getStatus(): bool
     {
