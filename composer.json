@@ -33,7 +33,7 @@
         }
     },
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "doctrine/orm": "*",
         "doctrine/dbal": "*",
         "smartassert/service-status-inspector": "^6.0"
